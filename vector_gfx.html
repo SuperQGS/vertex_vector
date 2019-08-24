@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            canvas {
+                border: 1px solid black;
+                width: 15%;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <h1>potential 3d engine</h1>
+        
+        <p>Horizontal (Top/Stardew Valley)</p>
+        <canvas id="horizontal"></canvas>
+        
+        <p>Vertical (Side/Terraria)</p>
+        <canvas id="vertical"></canvas>
+        
+        <p>Perspective (First Person/Quake)</p>
+        <canvas id="perspective"></canvas>
+        <button onclick="jump()">SPACE</button>
+        <button onclick="crouch()">SHIFT</button>
+        <button onclick="forward()">W</button>
+        <button onclick="left()">A</button>
+        <button onclick="right()">D</button>
+        
+        
+    </body>
+    
+    <script>
+        var v1x = 10;
+        var v1y = 90;
+        var v1z = 10;
+        
+        var v2x = 90;
+        var v2y = 20;
+        var v2z = 90;
+        
+        var v3x = 60;
+        var v3y = 20;
+        var v3z = 50;
+        
+        var v4x = 50;
+        var v4y = 50;
+        var v4z = 50;
+        
+        
+        var px = 0;
+        var py = 0;
+        var pz = 0;
+        
+        
+        var hori = horizontal.getContext('2d');
+        var vert = vertical.getContext('2d');
+        var pers = perspective.getContext('2d');
+        
+        document.getElementById("horizontal").width = 100;
+        document.getElementById("vertical").width = 100;
+        document.getElementById("perspective").width = 100;
+        
+        document.getElementById("horizontal").height = 100;
+        document.getElementById("vertical").height = 100;
+        document.getElementById("perspective").height = 100;
+        
+        
+        render();
+        function render() {
+            hori.clearRect(0, 0, 100, 100);
+            vert.clearRect(0, 0, 100, 100);
+            pers.clearRect(0, 0, 100, 100);
+            
+            
+            hori.fillStyle = '#f00';
+            hori.beginPath();
+            hori.moveTo(v1x,v1y);
+            hori.lineTo(v2x,v2y);
+            hori.lineTo(v3x,v3y);
+            hori.lineTo(v1x,v1y);
+            
+            hori.moveTo(v4x,v4y);
+            hori.lineTo(v2x,v2y);
+            hori.moveTo(v4x,v4y);
+            hori.lineTo(v3x,v3y);
+            hori.moveTo(v4x,v4y);
+            hori.lineTo(v1x,v1y);
+            
+            hori.stroke();
+            
+            
+            vert.fillStyle = '#f00';
+            vert.beginPath();
+            vert.moveTo(v1x,v1z);
+            vert.lineTo(v2x,v2z);
+            vert.lineTo(v3x,v3z);
+            vert.lineTo(v1x,v1z);
+            
+            vert.moveTo(v4x,v4z);
+            vert.lineTo(v2x,v2z);
+            vert.moveTo(v4x,v4z);
+            vert.lineTo(v3x,v3z);
+            vert.moveTo(v4x,v4z);
+            vert.lineTo(v1x,v1z);
+            
+            vert.stroke();
+            
+            
+            pers.fillStyle = '#f00';
+            pers.beginPath();
+            pers.moveTo((v1x+px)-(v1y+py),(v1x+px)+(v1z+pz));
+            pers.lineTo((v2x+px)-(v2y+py),(v2x+px)+(v2z+pz));
+            pers.lineTo((v3x+px)-(v3y+py),(v3x+px)+(v3z+pz));
+            pers.lineTo((v1x+px)-(v1y+py),(v1x+px)+(v1z+pz));
+            
+            pers.lineTo((v4x*px)-(v4y+py),(v4x+px)+(v4z+pz));
+            pers.lineTo((v2x*px)-(v2y+py),(v2x+px)+(v2z+pz));
+            pers.moveTo((v4x*px)-(v4y+py),(v4x+px)+(v4z+pz));
+            pers.lineTo((v3x*px)-(v3y+py),(v3x+px)+(v3z+pz));
+            pers.stroke();
+            
+        }
+        
+        function jump() {
+            pz = pz + 10;
+            render();
+        }
+        
+        function crouch() {
+            pz = pz - 10;
+            render();
+        }
+        
+        function left() {
+            py = py - 10;
+            render();
+        }
+        
+        function right() {
+            py = py + 10;
+            render();
+        }
+        
+        function forward() {
+            px = px - 1;
+            render();
+        }
+    </script>
+</html>
